@@ -1,0 +1,75 @@
+<html>
+<body>
+
+<div id="divUi">
+	<h3>Unicode Chart Generator</h3>
+
+	<p>
+		This program generates a chart of the first N
+		Unicode characters.
+	</p>
+
+	<div id="divOutput"></div>
+
+</div>
+
+<script type="text/javascript">
+
+class UnicodeChartGenerator
+{
+	generateDomElement()
+	{
+		var characterCount = 256;
+		var charactersPerColumn = 16;
+		var numberOfColumns =
+			characterCount / charactersPerColumn;
+
+		var d = document;
+		var table = d.createElement("table");
+		//table.width = "100%";
+		var thead = d.createElement("thead");
+		var th = d.createElement("th");
+		th.colspan = 
+		th.innerHTML =
+			"Unicode Map - First " + characterCount + " Characters";
+		thead.appendChild(th);
+		table.appendChild(thead);
+
+		for (var j = 0; j < numberOfColumns; j++)
+		{
+			var tr = d.createElement("tr");
+
+			for (var i = 0; i < charactersPerColumn; i++)
+			{
+				var td = d.createElement("td");
+				var characterIndex =
+					j * charactersPerColumn + i;
+
+				if (characterIndex < characterCount)
+				{
+					var characterIndexAndGlyph =
+						characterIndex + ":"
+						+ "&#" + characterIndex + ";";
+					td.innerHTML = characterIndexAndGlyph;
+				}
+				tr.appendChild(td);
+			}
+
+			table.appendChild(tr);
+		}
+
+		return table;
+	}
+}
+
+var unicodeChartAsDomElement =
+	new UnicodeChartGenerator().generateDomElement();
+
+var d = document;
+var divOutput = d.getElementById("divOutput");
+divOutput.innerHTML = "";
+divOutput.appendChild(unicodeChartAsDomElement);
+
+</script>
+</body>
+</html>
